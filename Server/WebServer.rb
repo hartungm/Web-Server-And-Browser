@@ -27,6 +27,9 @@ class WebServer
 				path = request_array[1]
 				path = File.join(SERVER_ROOT_DIRECTORY, path)
 
+				# Replace the tilde in url with instances of home
+				path.gsub! '~', '/home/'
+
 				# If the path is to a directory, append index.html to the end of the path
 				path = File.join(path, 'index.html') if File.directory?(path)
 
