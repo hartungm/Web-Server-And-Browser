@@ -2,8 +2,10 @@ require 'socket'
 
 class WebServer
 
+    # Root directory string for public content
 	SERVER_ROOT_DIRECTORY = "./public"
 
+    # Map for content types based on file extension
 	CONTENT_TYPE = {
 		'html' => 'text/html',
 		'txt'  => 'text/plain',
@@ -44,7 +46,7 @@ class WebServer
 
 			      		# write the contents of the file to the client 
 			      		IO.copy_stream(file, client)
-			      	end
+                    end
 		      	else
 		      		message = "404 File Not Found"
 		      		client.print "HTTP/1.1 404 Not Found\r\n" +
@@ -59,8 +61,8 @@ class WebServer
 				client.print "Bad Request"
 			end
 			client.close
-		end
-	end
-end
+		end #Thread
+	end #Loop
+end #Class
 
 WebServer.new
