@@ -31,7 +31,7 @@ class WebServer
 				path = path.gsub! "~", "home/" if path.include? "~"
 
 				# If the path is to a directory, append index.html to the end of the path
-				path = File.join(path, 'index.html') if File.directory?(path)
+				path = File.join(path, '/index.html') if File.directory?(path)
 
 				# output edited path to console, used for debugging
 				puts path
