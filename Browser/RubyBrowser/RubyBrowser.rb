@@ -1,3 +1,5 @@
+require 'Shoes'
+
 Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
     stack margin: 10 do
         flow do
