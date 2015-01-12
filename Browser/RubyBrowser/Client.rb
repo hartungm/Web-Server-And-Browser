@@ -1,26 +1,27 @@
 require 'socket'
-include Socket::Constants
 
-class Client 
+class Client
 
 	# Establish a connection with server at specified url (initialize the socket)
-	def initialize
-		@@socket = Socket.new( AF_INET, SOCK_STREAM, 0 )
+	def initialize(url, portNum)
+		@@socket = TCPSocket.new(url, portNum)
 	end
 
 	# grab text or binary information from the file path
-	def getFile(portNum, url)
-		socket_address = Socket.pack_sockaddr_in(portNum, url)
-		@@socket.connect(socket_address)
-		@@socket.write( "GET / HTTP/1.1\r\n\r\n" )
-		results = @@socket.read
-		puts results
+	def getFile(filePath)
+		@@socket.write("GET " + filePath + " HTTP/1.1\r\n\r\n")
+		while line = @@socket.gets
+			puts line
+		end
 	end
 
+	# Close the Socket 
 	def destroy
 		@@socket.close
 	end
+	
 end
 
-client = Client.new
-client.getFile(80, 'www.google.com')
+client = Client.new('localhost', 8080)
+client.getFile('/')
+client.destroy
