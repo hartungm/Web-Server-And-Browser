@@ -14,7 +14,7 @@ class WebServer
 		'css'  => 'text/css'
 	}
 
-	server = TCPServer.new('localhost', 8080)
+	server = TCPServer.new(8080)
 
 	loop do
 		Thread.start(server.accept) do |client|
