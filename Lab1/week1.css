@@ -15,6 +15,27 @@ td {
 	border: 1px solid blue;
 }
 
+h3 {
+	text-align: center;
+}
+
 #CIS p, #CIS td {
 	color: blue;
+}
+
+#CIS h3 {
+	background-color: gray;
+}
+
+#courses h3 {
+	background-color: green;
+	margin: 0 10px;
+}
+
+#courses li {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.imp {
+	color: red;
 }
