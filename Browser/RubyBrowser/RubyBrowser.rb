@@ -16,11 +16,18 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
     #or here, outside the stack in a different stack/flow
     def @trigger_request (url)
         #split url into addr, port, filePath
+        little_url = url.split("://")
+        #little_url[0] is protocol (http)
+        #little_url[1] is rest.
+        #split by first slash: second chunk will be filename
+        #first chunk will be addr and port.
+        #   if contains ':', grab port.  else use 80
         socket = TCPSocket.new(addr, port)
         socket.write("GET " + filePath + " HTTP/1.1\r\n\r\n")
         while line = socket.gets
-            #maybe build into string, then pass to buildPage?
+            text = text + line
         end
+        @build_page(text)
     end
 
     def @build_page (text)
