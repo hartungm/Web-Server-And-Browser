@@ -6,7 +6,6 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
             @address_bar = edit_line width: 500
             @go_button = button "GO"
             @go_button.click do
-                para "you did it!"
                 trigger_request(@address_bar.text())
             end
             #can put necessary UI elements here...
@@ -15,18 +14,25 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
     end
     #or here, outside the stack in a different stack/flow
     def trigger_request (url)
+        para "made it to the method!"
         #split url into addr, port, filePath
-        little_url = url.split("://")
+        #little_url = url.split("://")
         #little_url[0] is protocol (http)
         #little_url[1] is rest.
         #split by first slash: second chunk will be filename
         #first chunk will be addr and port.
         #   if contains ':', grab port.  else use 80
-        socket = TCPSocket.new(addr, port)
-        socket.write("GET " + filePath + " HTTP/1.1\r\n\r\n")
-        while line = socket.gets
+        @socket = TCPSocket.new('localhost',8080)
+        @socket.write("GET " + "/" + " HTTP/1.1\r\n\r\n")
+        para "to the loop!"
+        while line = @socket.gets
             text = text + line
+            para "we're in the loop..."
+            para line
         end
+        para "out of the loop!"
+        para text
+        @socket.close
         build_page(text)
     end
 
