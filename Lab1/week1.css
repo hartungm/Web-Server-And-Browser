@@ -2,3 +2,19 @@
 	width: 33%;
 	float: left;
 }
+
+table {
+	border: 5px solid gray;
+}
+
+th {
+	border: 1px solid black;
+}
+
+td {
+	border: 1px solid blue;
+}
+
+#CIS p, #CIS td {
+	color: blue;
+}
