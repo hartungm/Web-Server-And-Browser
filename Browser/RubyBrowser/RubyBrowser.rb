@@ -1,4 +1,3 @@
-require 'Shoes'
 require 'socket'
 
 Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
@@ -7,14 +6,15 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
             @address_bar = edit_line width: 500
             @go_button = button "GO"
             @go_button.click do
-                @trigger_request(@address_bar.text())
+                para "you did it!"
+                trigger_request(@address_bar.text())
             end
             #can put necessary UI elements here...
         end
         #or here, outside the flow...
     end
     #or here, outside the stack in a different stack/flow
-    def @trigger_request (url)
+    def trigger_request (url)
         #split url into addr, port, filePath
         little_url = url.split("://")
         #little_url[0] is protocol (http)
@@ -27,15 +27,15 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
         while line = socket.gets
             text = text + line
         end
-        @build_page(text)
+        build_page(text)
     end
 
-    def @build_page (text)
+    def build_page (text)
         #parse through text to create page content
         #this may need to be moved...we'll play with it
     end
 
-    def @on_link (url)
+    def on_link (url)
         @address_bar.text(url)
         trigger_request(url)
     end
