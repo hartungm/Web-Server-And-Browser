@@ -11,13 +11,16 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                 url = @address_bar.text #pull url string from address bar
                 @client = Client.new('localhost', 8080)
                 @data = @client.getFile('/MyMarkupTest.txt')
-                data_string = @data.slice("\r\n"); #Not sure if this is the correct newline character or not
+                para @data
+                data_string = @data.split(" "); #Not sure if this is the correct newline character or not
                 data_string.each_with_index do |line, index| #parse through the text pulled from the url 
-
+                    
                     if line.include? "*"
+                        line.gsub! '*', ''
                         para line, weight: "bold"
                     elsif line.include? "_"
-                        para line, underline: "single"
+                        line.gsub! '_', ''
+                        para line, emphasis: "italic"
                     elsif line.include? "[["
                     elsif line.include? "<<"
                     else #print the line normally if there are no special characters
