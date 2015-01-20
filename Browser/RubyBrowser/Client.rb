@@ -18,8 +18,8 @@ class Client
 		return lines
 	end
 
-	def getImagePath(filePath)
-		return @@url + ":" + @@portNum + "/" + filePath
+	def getImagePath()
+		@@url + ":" + @@portNum + "/"
 	end
 
 	# Close the Socket 
