@@ -50,11 +50,11 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 para word
                             end
                         else
-                            if word.include? "<br>"
-                                word.gsub! "<br>", ""
-                                para "\n"
-                            end
                             @linkwords = @linkwords + word + " "
+                        end
+                        if word.include? "<br>"
+                            word.gsub! "<br>", ""
+                            para "\n"
                         end
                     end
                 end
