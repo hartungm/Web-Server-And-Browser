@@ -14,7 +14,6 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                 para @data
                 data_string = @data.split(" "); #Not sure if this is the correct newline character or not
                 data_string.each_with_index do |line, index| #parse through the text pulled from the url 
-                    
                     if line.include? "*"
                         line.gsub! '*', ''
                         para line, weight: "bold"
@@ -26,7 +25,9 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                     else #print the line normally if there are no special characters
                         para line
                     end
-                
+                    if line.include? '\n'
+                        para "\n"
+                    end
                 end
             end
             #can put necessary UI elements here...
