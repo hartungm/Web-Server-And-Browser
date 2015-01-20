@@ -6,27 +6,34 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
     stack margin: 10 do #double check Shoes docs, make sure we need stack
         flow do
             @address_bar = edit_line width: 500
+            @text = nil
             @go_button = button "GO"
             @go_button.click do
-                url = @address_bar.text #pull url string from address bar
-                @client = Client.new('localhost', 8080)
-                @data = @client.getFile('/MyMarkupTest.txt')
-                para @data
-                data_string = @data.split(" "); #Not sure if this is the correct newline character or not
-                data_string.each_with_index do |word, index| #parse through the text pulled from the url 
-                    if word.include? "*"
-                        word.gsub! '*', ''
-                        para word, weight: "bold"
-                    elsif word.include? "_"
-                        word.gsub! '_', ''
-                        para word, emphasis: "italic"
-                    elsif word.include? "[["
-                    elsif word.include? "<<"
-                    else #print the word normally if there are no special characters
-                        para word
-                    end
-                    if word.include? "\n"
-                        para "\n"
+                    url = @address_bar.text #pull url string from address bar
+                    @client = Client.new('localhost', 8080)
+                    @data = @client.getFile('/MyMarkupTest.txt')
+                    header_strip = @data.split("\r\n\r\n").last
+                    header_strip.gsub! "\n", " <br> "
+                    data_string = header_strip.split(" "); #Not sure if this is the correct newline character or not
+                    @text = flow do
+                    data_string.each_with_index do |word, index| #parse through the text pulled from the url 
+                        if word.include? "*"
+                            word.gsub! '*', ''
+                            para word, weight: "bold"
+                        elsif word.include? "_"
+                            word.gsub! '_', ''
+                            para word, emphasis: "italic"
+                        elsif word.include? "[["
+
+                        elsif word.include? "<<"
+                        else #print the word normally if there are no special characters
+                            para word
+                        end
+                        if word.include? "<br>"
+                            word.gsub! "<br>", ""
+                            para "\n"
+
+                        end
                     end
                 end
             end
