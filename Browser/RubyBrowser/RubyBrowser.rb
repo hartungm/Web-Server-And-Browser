@@ -13,19 +13,19 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                 @data = @client.getFile('/MyMarkupTest.txt')
                 para @data
                 data_string = @data.split(" "); #Not sure if this is the correct newline character or not
-                data_string.each_with_index do |line, index| #parse through the text pulled from the url 
-                    if line.include? "*"
-                        line.gsub! '*', ''
-                        para line, weight: "bold"
-                    elsif line.include? "_"
-                        line.gsub! '_', ''
-                        para line, emphasis: "italic"
-                    elsif line.include? "[["
-                    elsif line.include? "<<"
-                    else #print the line normally if there are no special characters
-                        para line
+                data_string.each_with_index do |word, index| #parse through the text pulled from the url 
+                    if word.include? "*"
+                        word.gsub! '*', ''
+                        para word, weight: "bold"
+                    elsif word.include? "_"
+                        word.gsub! '_', ''
+                        para word, emphasis: "italic"
+                    elsif word.include? "[["
+                    elsif word.include? "<<"
+                    else #print the word normally if there are no special characters
+                        para word
                     end
-                    if line.include? '\n'
+                    if word.include? "\n"
                         para "\n"
                     end
                 end
