@@ -38,17 +38,17 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 word.gsub! "[[" ""
                                 @link = word
                                 @linkbit = true
-                            elsif word.include? "]]"
-                                word.gsub! "]]" ""
-                                @linkwords = @linkwords + word
-                                para(link(@linkwords).click do
-
-                                end)
-                                @linkbit = false
                             elsif word.include? "<<"
                             else #print the word normally if there are no special characters
                                 para word
                             end
+                        elsif word.include? "]]"
+                            word.gsub! "]]" ""
+                            @linkwords = @linkwords + word
+                            para(link(@linkwords).click do
+
+                            end)
+                            @linkbit = false
                         else
                             @linkwords = @linkwords + word + " "
                         end
