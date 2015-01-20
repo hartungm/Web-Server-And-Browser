@@ -11,7 +11,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
             @go_button.click do
                     url = @address_bar.text #pull url string from address bar
                     @client = Client.new('localhost', 8080)
-                    @data = @client.getFile('/MyMarkupTest.txt')
+                    @data = @client.getFile('/test2.txt')
                     header_strip = @data.split("\r\n\r\n").last
                     header_strip.gsub! "\n", " <br> "
                     @linkbit = false
@@ -38,7 +38,10 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 word.gsub! "[[", ""
                                 @link = word
                                 @linkbit = true
-                            elsif word.include? "<<"
+                            elsif word.include?("<<") && word.include?(">>")
+                                word.gsub! "<<", ""
+                                word.gsub! ">>", ""
+                                image @client.getImagePath(word)
                             else #print the word normally if there are no special characters
                                 para word
                             end

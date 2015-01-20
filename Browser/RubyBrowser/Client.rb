@@ -1,10 +1,11 @@
 require 'socket'
 
 class Client
-
 	# Establish a connection with server at specified url (initialize the socket)
 	def initialize(url, portNum)
 		@@socket = TCPSocket.new(url, portNum)
+		@@url = url
+		@@portNum = portNum
 	end
 
 	# grab text or binary information from the file path
@@ -15,6 +16,10 @@ class Client
 			lines = lines + line
 		end
 		return lines
+	end
+
+	def getImagePath(filePath)
+		@@url + ":" + @@portNum + "/" + filePath
 	end
 
 	# Close the Socket 
