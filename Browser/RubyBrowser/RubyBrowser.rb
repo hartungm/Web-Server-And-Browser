@@ -29,13 +29,13 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 word.gsub! '_', ''
                                 para word, emphasis: "italic"
                             elsif word.include?( "[[") && word.include?( "]]")
-                                word.gsub! "[[" ""
-                                word.gsub! "]]" ""
+                                word.gsub! "[[", ""
+                                word.gsub! "]]", ""
                                 para(link(word).click do
                                     #code for request
                                 end)
                             elsif word.include? "[["
-                                word.gsub! "[[" ""
+                                word.gsub! "[[", ""
                                 @link = word
                                 @linkbit = true
                             elsif word.include? "<<"
@@ -43,7 +43,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 para word
                             end
                         elsif word.include? "]]"
-                            word.gsub! "]]" ""
+                            word.gsub! "]]", ""
                             @linkwords = @linkwords + word
                             para(link(@linkwords).click do
 
