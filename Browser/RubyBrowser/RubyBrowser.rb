@@ -10,8 +10,18 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
             @go_button = button "GO"
             @go_button.click do
                     url = @address_bar.text #pull url string from address bar
-                    @client = Client.new('localhost', 8080)
-                    @data = @client.getFile('/test2.txt')
+                    if url.include? "://" #split http:// off url
+                        url = url.split("://").last
+                    end
+                    pos = url.index("/")
+                    file = url.slice(pos..-1)
+                    addr = url.slice(0..pos-1)
+                    if addr.include? ":"
+                        portnum = addr.split(":").last
+                        addr = addr.split(":").first
+                    end
+                    @client = Client.new(addr, portnum)
+                    @data = @client.getFile(file)
                     header_strip = @data.split("\r\n\r\n").last
                     header_strip.gsub! "\n", " <br> "
                     @linkbit = false
