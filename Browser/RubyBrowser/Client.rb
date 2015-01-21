@@ -30,16 +30,13 @@ class Client
     def getImage(filePath)
         @@socket.write("GET " + filePath + " HTTP/1.1\r\n\r\n")
         File.open('./' + filePath, 'w') do |file|
-            puts "we're in the client's open file do"
             lines = ""
-            while line = @@server.gets
-                puts line
+            while line = @@socket.gets
                 lines = lines + line
             end
+            lines = lines.split("\r\n\r\n").last
             file.write(lines)
-            puts "its done, apparently"
         end
-        return "./" + filePath
     end
 	
 end

@@ -41,8 +41,11 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                             elsif word.include?("<<") && word.include?(">>")
                                 word.gsub! "<<", ""
                                 word.gsub! ">>", ""
-                                puts word
-                                image (@client.getImage(word))
+                                @client = Client.new('localhost', 8080)
+                                @client.getImage(word)
+                                stack do
+                                    image word
+                                end
                             else #print the word normally if there are no special characters
                                 para word
                             end
