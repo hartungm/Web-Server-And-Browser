@@ -32,7 +32,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 word.gsub! "[[", ""
                                 word.gsub! "]]", ""
                                 para(link(word).click do
-                                    #code for request
+                                   #code for request
                                 end)
                             elsif word.include? "[["
                                 word.gsub! "[[", ""
@@ -41,7 +41,8 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                             elsif word.include?("<<") && word.include?(">>")
                                 word.gsub! "<<", ""
                                 word.gsub! ">>", ""
-                                image @client.getImagePath(word)
+                                puts word
+                                image (@client.getImage(word))
                             else #print the word normally if there are no special characters
                                 para word
                             end
