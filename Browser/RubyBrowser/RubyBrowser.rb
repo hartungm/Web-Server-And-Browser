@@ -10,6 +10,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
             @go_button = button "GO"
             @go_button.click do
                     url = @address_bar.text #pull url string from address bar
+                    ##NEED TO ADD IN PORT AND FILE CONDITIONALS...DON'T FORGET, MATT!!!!
                     if url.include? "://" #split http:// off url
                         url = url.split("://").last
                     end
@@ -42,7 +43,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 word.gsub! "[[", ""
                                 word.gsub! "]]", ""
                                 para(link(word).click do
-                                   #code for request
+                                   @address_bar.text = word
                                 end)
                             elsif word.include? "[["
                                 word.gsub! "[[", ""
@@ -51,7 +52,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                             elsif word.include?("<<") && word.include?(">>")
                                 word.gsub! "<<", ""
                                 word.gsub! ">>", ""
-                                @client = Client.new('localhost', 8080)
+                                @client = Client.new(addr, portnum)
                                 @client.getImage(word)
                                 stack do
                                     image word
@@ -63,7 +64,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                             word.gsub! "]]", ""
                             @linkwords = @linkwords + word
                             para(link(@linkwords).click do
-
+                                @address_bar.text = @link
                             end)
                             @linkbit = false
                         else
