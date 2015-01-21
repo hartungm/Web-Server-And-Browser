@@ -19,11 +19,7 @@ class Client
 	end
 
 	def getImagePath(filePath)
-<<<<<<< HEAD
 		@@url + ":" + @@portNum + "/" + filePath
-=======
-		return @@url + ":" + @@portNum + "/" + filePath
->>>>>>> parent of c83466a... Changed getImagePath
 	end
 
 	# Close the Socket 
