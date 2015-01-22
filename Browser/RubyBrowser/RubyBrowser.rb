@@ -10,16 +10,22 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
             @go_button = button "GO"
             @go_button.click do
                     url = @address_bar.text #pull url string from address bar
-                    ##NEED TO ADD IN PORT AND FILE CONDITIONALS...DON'T FORGET, MATT!!!!
                     if url.include? "://" #split http:// off url
                         url = url.split("://").last
                     end
-                    pos = url.index("/")
-                    file = url.slice(pos..-1)
-                    addr = url.slice(0..pos-1)
+                    if url.include? "/"
+                        pos = url.index("/")
+                        file = url.slice(pos..-1)
+                        addr = url.slice(0..pos-1)
+                    else
+                        file = "/"
+                        addr = url
+                    end
                     if addr.include? ":"
                         portnum = addr.split(":").last
                         addr = addr.split(":").first
+                    else
+                        portnum = "80"
                     end
                     @client = Client.new(addr, portnum)
                     @data = @client.getFile(file)
