@@ -9,8 +9,9 @@ class Client
 	end
 
 	# grab text or binary information from the file path
-	def getFile(filePath)
-		@@socket.write("GET " + filePath + " HTTP/1.1\r\n\r\n")
+	def getFile(filePath, hostName)
+		@@socket.write("GET " + filePath + " HTTP/1.1\r\n")
+        @@socket.write("Host: " + hostName + " \r\n\r\n")
 		lines = ""
 		while line = @@socket.gets
 			lines = lines + line
@@ -28,7 +29,8 @@ class Client
 	end
 
     def getImage(filePath)
-        @@socket.write("GET " + filePath + " HTTP/1.1\r\n\r\n")
+        @@socket.write("GET " + filePath + " HTTP/1.1\r\n")
+        @@socket.write("Host: " + hostName + " \r\n\r\n")
         File.open('./' + filePath, 'w') do |file|
             lines = ""
             while line = @@socket.gets

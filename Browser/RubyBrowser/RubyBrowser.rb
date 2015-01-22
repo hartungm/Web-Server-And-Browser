@@ -9,9 +9,9 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
             @text = nil
             @go_button = button "GO"
             @go_button.click do
-                    url = @address_bar.text #pull url string from address bar
-                    if url.include? "://" #split http:// off url
-                        url = url.split("://").last
+                    startUrl = @address_bar.text #pull url string from address bar
+                    if startUrl.include? "://" #split http:// off url
+                        url = startUrl.split("://").last
                     end
                     if url.include? "/"
                         pos = url.index("/")
@@ -28,7 +28,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                         portnum = "80"
                     end
                     @client = Client.new(addr, portnum)
-                    @data = @client.getFile(file)
+                    @data = @client.getFile(file,addr)
                     header_strip = @data.split("\r\n\r\n").last
                     header_strip.gsub! "\n", " <br> "
                     @linkbit = false
@@ -48,18 +48,28 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                             elsif word.include?( "[[") && word.include?( "]]")
                                 word.gsub! "[[", ""
                                 word.gsub! "]]", ""
+                                if !word.include? ":"
+                                    word = startUrl.rpartition("/").first + "/" + word
+                                end
                                 para(link(word).click do
                                    @address_bar.text = word
                                 end)
                             elsif word.include? "[["
                                 word.gsub! "[[", ""
+                                if !word.include? ":"
+                                    word = startUrl.rpartition("/").first + "/" + word
+                                end
                                 @link = word
                                 @linkbit = true
                             elsif word.include?("<<") && word.include?(">>")
                                 word.gsub! "<<", ""
                                 word.gsub! ">>", ""
-                                @client = Client.new(addr, portnum)
-                                @client.getImage(word)
+                                if !word.include? ":"
+                                    word = startUrl.rpartition("/").first + "/" + word
+                                end
+                                #@client = Client.new(addr, portnum)
+                                image word
+                                #@client.getImage(word)
                                 stack do
                                     image word
                                 end
