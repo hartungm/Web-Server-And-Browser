@@ -79,9 +79,10 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 end
                             elsif word.include? "]]"
                                 word.gsub! "]]", ""
+                                earl = @link
                                 @linkwords = @linkwords + word
                                 para(link(@linkwords).click do
-                                    @address_bar.text = @link
+                                    @address_bar.text = earl
                                 end)
                                 @linkwords = ""
                                 @linkbit = false
