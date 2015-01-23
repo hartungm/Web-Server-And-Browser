@@ -13,19 +13,14 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                     startUrl = @address_bar.text #pull url string from address bar
                     if ["jpg", "jpeg", "png", "gif"].include? startUrl.rpartition(".").last
                         image startUrl
-                        puts "image"
                     else
-                        puts "not image"
                         if startUrl.include? "://" #split http:// off url
                             url = startUrl.split("://").last
-                            puts url
                         end
                         if url.include? "/"
                             pos = url.index("/")
                             file = url.slice(pos..-1)
                             addr = url.slice(0..pos-1)
-                            puts file
-                            puts addr
                         else
                             file = "/"
                             addr = url
@@ -33,8 +28,6 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                         if addr.include? ":"
                             portnum = addr.split(":").last
                             addr = addr.split(":").first
-                            puts portnum
-                            puts addr
                         else
                             portnum = "80"
                         end
