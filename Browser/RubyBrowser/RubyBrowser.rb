@@ -70,7 +70,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                     if !word.include? ":"
                                         word = startUrl.rpartition("/").first + "/" + word
                                     end
-                                    image word
+                                    #image word
                                     stack do
                                         image word
                                     end
@@ -83,6 +83,7 @@ Shoes.app(title: "RubyBrowser", width: 600, height: 400) do
                                 para(link(@linkwords).click do
                                     @address_bar.text = @link
                                 end)
+                                @linkwords = ""
                                 @linkbit = false
                             else
                                 @linkwords = @linkwords + word + " "
