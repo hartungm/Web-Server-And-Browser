@@ -39,17 +39,29 @@ class WebServer
 				# Make sure file exists, if it doesn't send a 404 error
 				if File.exist?(path)
 					extension = path.split(".").last
-					File.open(path, "rb") do |file|
-						client.print "HTTP/1.1 200 OK\r\n" +
-									 "Content-Type: #{CONTENT_TYPE.fetch(extension.downcase)}\r\n" +
-									 "Content-Length: #{file.size}\r\n" +
-									 "Connection: Keep-Alive\r\n"
+					if extension.downcase === 'rb'
+						output = %x{ ruby #{path} }
+						puts output
+						client.print 	"HTTP/1.1 200 OK\r\n" +
+										"Content-Type: text/plain\r\n" +
+										"Content-Length: #{output.size}\r\n" +
+										"Connection: Keep-Alive\r\n"
+						client.print	"\r\n"
 
-						client.print "\r\n"
+						client.print output
+					else
+						File.open(path, "rb") do |file|
+							client.print "HTTP/1.1 200 OK\r\n" +
+										 "Content-Type: #{CONTENT_TYPE.fetch(extension.downcase)}\r\n" +
+										 "Content-Length: #{file.size}\r\n" +
+										 "Connection: Keep-Alive\r\n"
 
-			      		# write the contents of the file to the client 
-			      		IO.copy_stream(file, client)
-                    end
+							client.print "\r\n"
+
+				      		# write the contents of the file to the client 
+				      		IO.copy_stream(file, client)
+	                    end
+	                end
 		      	else
 		      		message = "404 File Not Found"
 		      		client.print "HTTP/1.1 404 Not Found\r\n" +
