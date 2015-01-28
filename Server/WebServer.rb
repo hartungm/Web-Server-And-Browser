@@ -1,4 +1,5 @@
 require 'socket'
+require 'cgi'
 
 class WebServer
 
@@ -37,6 +38,14 @@ class WebServer
 				puts path
 
 				# Make sure file exists, if it doesn't send a 404 error
+				if path.include? "?"
+						params = path.split("?").last
+						path = path.split("?").first
+						if params
+							paramMap = CGI::parse(params)
+						end
+						puts paramMap
+				end
 				if File.exist?(path)
 					extension = path.split(".").last
 					if extension.downcase === 'rb'
