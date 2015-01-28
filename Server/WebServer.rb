@@ -42,14 +42,16 @@ class WebServer
 						params = path.split("?").last
 						path = path.split("?").first
 						if params
-							paramMap = CGI::parse(params)
+							paramMap = params
+						else
+							paramMap = nil
 						end
 						puts paramMap
 				end
 				if File.exist?(path)
 					extension = path.split(".").last
 					if extension.downcase === 'rb'
-						output = %x{ ruby #{path} }
+						output = %x{ ruby #{path} "#{paramMap}"}
 						puts output
 						client.print 	"HTTP/1.1 200 OK\r\n" +
 										"Content-Type: text/plain\r\n" +
